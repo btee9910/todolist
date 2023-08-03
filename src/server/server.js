@@ -1,21 +1,27 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import noteController from "./controller/noteController.js"
-
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.CONNECTION_URL).then(()=> console.log("Mongo connected"));
+import routes from './routes/index.js';
 
 const PORT = process.env.PORT;
 const app = express();
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.CONNECTION_URL)
+.then(()=> {
+    console.log("MongoDB connected")
+    app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}).catch((error) => {
+    console.log(error)
+});
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
-app.use("/v1",noteController)
-// routes(app); // attach our routes to the servers 
-app.listen(PORT);
+routes(app); // attach our routes to the servers 
 
 // a 404 "page not found" 
 app.use((req, res) => {  // default function if not function work
