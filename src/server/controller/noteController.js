@@ -1,76 +1,64 @@
-import {Router} from "express";
-import noteModels from "../Models/noteModels.js";
+import Note from "../Models/noteModels.js";
 
-const router = Router();
-
-router.get("/note", async (req,res) => {
+export const listNote = async (req,res) => {
     try{
-        const database = await noteModels.find()
-
-        res.json({database});
+        const notes = await Note.find()
+        let infos = [];
+        notes.forEach((note) => {
+            infos = [...infos, {id: note._id, status: note.status, priority: note.priority}]
+        })
+        res.status(200).json(infos);
     }catch(e){
         console.log(e);
     }
     
-})
+};
 
-router.post("/create", async (req,res) => {
+export const createNote = async (req,res) => {
     try{
-        const newNote = new noteModels({
-            ...req.body,
-            title : req.body.title,
-            note : req.body.note,
-            priority : req.body.priority
-        });
-        await newNote.save();
-        res.json({message : "Created sucessfully!"});
+        const note = await Note.create(req.body);
+        res.status(200).json({note, message: 'Created Successfully'});
     }catch(e){
         console.log(e);
     }
     
-})
+};
 
-router.put("/edit/:id", async (req,res) => {
+export const findNote = async (req,res) => {
     try{
-        const noteId = req.params.id;
-        if(req.body.status !== "completed" ){
-            await noteModels.findByIdAndUpdate(noteId,{
-                ...req.body,
-                priority : req.body.priority,
-                dateUpdated : Date.now(),
-                title : req.body.title,
-                note : req.body.note,
-                status : req.body.status,
-                dateCompleted : undefined
+        const {id} = req.params;
+        const notes = await Note.findById(id)
+        res.status(200).json(notes);
+    }catch(e){
+        console.log(e);
+        res.status(404).json({message: `connot find any product with ID ${id}`});
+    }
+    
+};
 
-            })
-        }else{
-            await noteModels.findByIdAndUpdate(noteId,{
-                ...req.body,
-                priority : req.body.priority,
-                dateCompleted : Date.now(),
-                title : req.body.title,
-                note : req.body.note,
-                status : req.body.status
-        })}
-
-        res.json({message : "Edit sucessfully!"});
+export const editNote = async (req,res) => {
+    try{
+        const id = req.params.id; 
+        let note = await Note.findByIdAndUpdate(id, req.body);
+        if (!note) {
+            return res.status(404).json({message: `connot find any note with ID ${id}`})
+        }
+        const updatedNote = await Note.findById(id);
+        res.status(200).json({updatedNote, message : "Edit sucessfully!"});
     }catch(e){
         console.log(e);
     }
     
-})
+};
 
-router.delete("/delete/:id", async (req,res) => {
+export const deleteNote = async (req,res) => {
     try{
-        const noteId = req.params.id;
-        await noteModels.findByIdAndDelete(noteId)
+        const id = req.params.id;
+        const note = await Note.findByIdAndDelete(id)
 
-        res.json({message : "Delete sucessfully!"});
+        res.status(200).json({message : `Sucessfully deleted ${note.title}!`});
     }catch(e){
         console.log(e);
     }
     
-})
-
-export default router;
+};
