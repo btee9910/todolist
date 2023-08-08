@@ -3,11 +3,7 @@ import Note from "../Models/noteModels.js";
 export const listNote = async (req,res) => {
     try{
         const notes = await Note.find()
-        let infos = [];
-        notes.forEach((note) => {
-            infos = [...infos, {id: note._id, status: note.status, priority: note.priority}]
-        })
-        res.status(200).json(infos);
+        res.status(200).json(notes);
     }catch(e){
         console.log(e);
     }
@@ -17,7 +13,7 @@ export const listNote = async (req,res) => {
 export const createNote = async (req,res) => {
     try{
         const note = await Note.create(req.body);
-        res.status(200).json({note, message: 'Created Successfully'});
+        res.status(200).json({note, message: `Task:${note.title} is created successfully`});
     }catch(e){
         console.log(e);
     }
@@ -27,8 +23,8 @@ export const createNote = async (req,res) => {
 export const findNote = async (req,res) => {
     try{
         const {id} = req.params;
-        const notes = await Note.findById(id)
-        res.status(200).json(notes);
+        const note = await Note.findById(id)
+        res.status(200).json(note);
     }catch(e){
         console.log(e);
         res.status(404).json({message: `connot find any product with ID ${id}`});
@@ -44,7 +40,7 @@ export const editNote = async (req,res) => {
             return res.status(404).json({message: `connot find any note with ID ${id}`})
         }
         const updatedNote = await Note.findById(id);
-        res.status(200).json({updatedNote, message : "Edit sucessfully!"});
+        res.status(200).json({updatedNote, message : `Task:${updatedNote.title} is edited sucessfully!`});
     }catch(e){
         console.log(e);
     }
@@ -56,7 +52,7 @@ export const deleteNote = async (req,res) => {
         const id = req.params.id;
         const note = await Note.findByIdAndDelete(id)
 
-        res.status(200).json({message : `Sucessfully deleted ${note.title}!`});
+        res.status(200).json({message : `Task:${note.title} is deleted successfully!`});
     }catch(e){
         console.log(e);
     }
