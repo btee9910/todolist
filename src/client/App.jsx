@@ -1,5 +1,4 @@
 import SectionBlock from "./components/SectionBlock";
-import StickyNote from "./components/stickyNote";
 import CkyComponent from "./components/CkyComponent";
 const App = () => {
 
@@ -9,9 +8,9 @@ const App = () => {
       <h1>Get your work</h1>
       </header>
       <CkyComponent></CkyComponent>
-      <SectionBlock title='To do' ></SectionBlock>
-      <SectionBlock title='Completed' ></SectionBlock>
-      <SectionBlock title='On hold' ></SectionBlock>
+      <SectionBlock title='To Do'/>
+      <SectionBlock title='Completed'/>
+      <SectionBlock title='On Hold'/>
 
     </div>
   )
