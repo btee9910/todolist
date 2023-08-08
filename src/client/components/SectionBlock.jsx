@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StickyNote from "./stickyNote";
+import StickyNote from "./StickyNote";
 
 const SectionBlock = ( {title} ) => {
     const [stickyNotes, setStickyNotes] = useState([{id: '64cb6215904377d6d0f0c648', priority: 'Medium' },
