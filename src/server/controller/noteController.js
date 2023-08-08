@@ -3,11 +3,7 @@ import Note from "../Models/noteModels.js";
 export const listNote = async (req,res) => {
     try{
         const notes = await Note.find()
-        let infos = [];
-        notes.forEach((note) => {
-            infos = [...infos, {id: note._id, status: note.status, priority: note.priority}]
-        })
-        res.status(200).json(infos);
+        res.status(200).json(notes);
     }catch(e){
         console.log(e);
     }
