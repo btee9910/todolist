@@ -5,13 +5,13 @@ const noteSchema = new Schema({
     note: { type: String, require: true},
     status : {
         type: String,
-        enum: ['toDo', 'onHold', 'completed'],
-        default: 'toDo'
+        enum: ['To Do', 'On Hold', 'Completed'],
+        default: 'To Do'
     },
     priority : {
         type: String,
-        enum: ['high', 'medium', 'low'],
-        default: 'low'
+        enum: ['High', 'Medium', 'Low'],
+        default: 'Low'
     },
 },
 {
