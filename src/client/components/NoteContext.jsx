@@ -16,6 +16,9 @@ export default function NoteProvider(props) {
   const [toDo, setToDo] = useState({});
   const [onHold, setOnHold] = useState({});
   const [completed, setCompleted] = useState({});
+  const [responseData, setResponseData] = useState(undefined)
+  const [confirmation, setConfirmation] = useState(false)
+
 
   //fetch main data from server
   const getMain = async () => {
@@ -57,6 +60,10 @@ export default function NoteProvider(props) {
     toDo,
     onHold,
     completed,
+    responseData,
+    setResponseData,
+    confirmation,
+    setConfirmation
   };
 
   return (
