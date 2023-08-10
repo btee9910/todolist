@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'MuseoModerno', cursive;
+  line-height: 16px;
   text-align: center;
   color: #3A2E39;
   background-color: rgb(253, 253, 253);
@@ -7,49 +10,52 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 1080px;
+  max-width: 1050px;
 }
 
 .section-block {
-  border-top: 3px solid silver;
-  max-width: 1000px;
+  max-width: 1050px;
   padding: 0px 10px 10px 10px;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 30px auto;
+}
+
+.section-block-notes {
+  width: 100%;
 }
 
 .note-block {
   display: flex;
+  max-width: 980px;;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin: 0 auto;
 }
 
 .section-block-title {
+  border-top: 2px solid silver;
   text-align: left;
-  margin: 20px 0 5px 30px;
+  margin: 0;
+  padding: 15px 0 10px 20px;
 }
 
 .stickynote{
   display: inline-flex;
   position: relative;
   margin: 10px;
-  padding: 5px;
+  padding: 5px 5px 2px 5px;
   width: 165px;
   height: fit-content;
   border-radius: 0 24px 24px 0;
-  background-color: #EDB183;
   box-shadow: 4px 6px 1px black;
   color: #1E555C;
-  font-size: 12px;
-
+  font-size: 13px;
 }
 
 #cross-icon {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 4px;
+  top: 4px;
 }
-
-
 
 .note-section {
   height: 210px;
@@ -59,51 +65,166 @@ body {
 }
 
 .sticky-title {
-  margin: 5px 0;
+  border: 0;
+  background-color: transparent;
+  margin: 3px 0 0 5px;
   font-size: 13px;
   font-weight: bold;
   text-align: left;
-  width: 135px;
-
+  width: 150px;
+  height: 33px;
+  resize: none;
+  font: unset;
+  font-weight: bold;
+}
+.sticky-title:focus, #sticky-note > form > textarea:focus {
+  outline: none;
+  /* margin-left: 3px; */
+  border-left: 3px solid maroon;
 }
 
 #sticky-note {
-  margin: 0 5px;
+  margin: 0px 5px;
   text-align: left;
-  font-size: 12px;
-  height: 130px;
+  font-size: 13px;
+  height: 125px;
+  max-height: 125px;
+  align-items: flex-start;
+  border-top: 1px solid grey;
+  width: 100%;
+}
+
+.customized-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: transparent;
+  background-color: transparent;
+}
+
+.customized-scrollbar:hover::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #aaa; /* or add it to the track */
+}
+
+.customized-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #1E555C;
+}
+
+#sticky-note > form > textarea {
+  margin: 4px 0;
+  width: 155px;
+  border: 0;
+  font: unset;
+  background-color: transparent;
+  resize: none;
 }
 
 .date {
-  font-size: 8px;
-  margin-left: 5px;
+  font-size: 10px;
+  margin: 0 0 10px 2px;
   text-align: left;
+  height: 10px;
+}
+
+.date > p {
+  margin-block: 3px;
 }
 
 #bottom-note {
   width: 100%;
+  height: 25px;
 }
 
 #sticky-button{
-  /* display: flex; */
   justify-content: center;
   width: 100%;
   margin-bottom: 5px;
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .stickynote:hover .hide {
-  display: flex;
+  animation: fade 1s ease-in-out;
+  display: flex !important;
+}
+
+@keyframes fade {
+  0% {opacity: 0;}
+  50% {opacity: 0.5;}
+  100% {opacity: 1;}
 }
 
 .button-style {
   margin: 1px 2px !important;
   font-size: 8px !important;
-  padding: 2px 6px !important;
-  color: darkolivegreen !important;
-  border-color: darkolivegreen !important;
+  padding: 3px 6px !important;
+  color: rgb(16, 16, 16) !important;
+  border-color: rgb(16, 16, 16) !important;
 }
 
+.dropdown {
+  margin: 0 30px 0 auto;
+  width: 200px;
+}
+
+#demo-select-small {
+  font-size: small;
+}
+
+.MuiMenuItem-root {
+  font-size: small;
+}
+
+.priorityMark {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  font-weight: 900;
+  font-size: 30px;
+  top: -10px;
+}
+
+/* #priorityMark-1 {
+  top: -4px;
+  left: 3px;
+  font-size: 20px;
+}
+
+#priorityMark-2 {
+  top: -5px;
+  left: 11px;
+  font-size: 33px;
+}
+
+#priorityMark-3 {
+  top: -6px;
+  left: 23px;
+  font-size: 45px;
+} */
+
+#priorityMark-1 {
+  left: 4px;
+}
+
+#priorityMark-2 {
+  left: 14px;
+}
+
+#priorityMark-3 {
+  left: 24px;
+}
+
+.toDoNote {
+  background-color: #EDB183;
+}
+
+.completedNote {
+  background-color: rgb(133, 217, 133);
+}
+
+.onHoldNote {
+  background-color: silver;
+}
