@@ -16,6 +16,9 @@ export default function NoteProvider(props) {
   const [onHold, setOnHold] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [sort, setSort] = useState('Date, old to new');
+  const [responseData, setResponseData] = useState(undefined)
+  const [confirmation, setConfirmation] = useState(false)
+
 
   //fetch main data from server
   const fetchData = () => {
@@ -100,7 +103,11 @@ export default function NoteProvider(props) {
     completed,
     setCompleted,
     sort,
-    setSort
+    setSort,
+    responseData,
+    setResponseData,
+    confirmation,
+    setConfirmation
   };
 
   return (

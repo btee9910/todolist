@@ -30,7 +30,6 @@ export const createNote = async (req,res) => {
     }
     
 };
-
 export const findNote = async (req,res) => {
     try{
         const {id} = req.params;
