@@ -1,8 +1,19 @@
 import Note from "../Models/noteModels.js";
 
+// Sort data by latest date from old to new
+const compareDate= (a, b) => {
+    const date1 = a.updatedAt;
+    const date2 = b.updatedAt;
+
+    let comparison = 0;
+    date1 > date2? comparison = 1: comparison = -1;
+    return comparison;
+}
+
 export const listNote = async (req,res) => {
     try{
-        const notes = await Note.find()
+        let notes = await Note.find();
+        notes = notes.sort(compareDate);
         res.status(200).json(notes);
     }catch(e){
         console.log(e);

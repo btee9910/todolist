@@ -1,5 +1,6 @@
 import SectionBlock from "./components/SectionBlock";
 import CkyComponent from "./components/CkyComponent";
+import SortingDropdown from "./components/SortingDropdown";
 import { useNote } from "./components/NoteContext";
 import { Button } from "@mui/material";
 const App = () => {
@@ -10,6 +11,13 @@ const App = () => {
       <header>
         <h1>Get your work</h1>
       </header>
+      <CkyComponent></CkyComponent>
+      <div className='dropdown'>
+          <SortingDropdown />
+      </div>
+      <SectionBlock title='To Do' status='toDo'/>
+      <SectionBlock title='Completed' status='completed'/>
+      <SectionBlock title='On Hold' status='onHold'/>
       {noteContext.responseData && (
         <div
           style={{
@@ -49,10 +57,6 @@ const App = () => {
       
       </div>
       )}
-      <CkyComponent />
-      <SectionBlock title="To Do" />
-      <SectionBlock title="Completed" />
-      <SectionBlock title="On Hold" />
     </div>
   );
 };
