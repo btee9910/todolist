@@ -1,5 +1,6 @@
 import SectionBlock from "./components/SectionBlock";
 import CkyComponent from "./components/CkyComponent";
+import SortingDropdown from "./components/SortingDropdown";
 const App = () => {
 
   return (
@@ -8,9 +9,12 @@ const App = () => {
       <h1>Get your work</h1>
       </header>
       <CkyComponent></CkyComponent>
-      <SectionBlock title='To Do'/>
-      <SectionBlock title='Completed'/>
-      <SectionBlock title='On Hold'/>
+      <div className='dropdown'>
+          <SortingDropdown />
+      </div>
+      <SectionBlock title='To Do' status='toDo'/>
+      <SectionBlock title='Completed' status='completed'/>
+      <SectionBlock title='On Hold' status='onHold'/>
 
     </div>
   )
