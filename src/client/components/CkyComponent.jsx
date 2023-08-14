@@ -114,7 +114,7 @@ const CkyComponent = () => {
                 placeholder="title"
                 value={formData.title}
                 onChange={handleChange}
-                maxLength={34}
+                maxLength={28}
               />
               {inputError && <div style={{ color: "red" }}>{inputError}</div>}
             </div>
@@ -132,7 +132,7 @@ const CkyComponent = () => {
                 value={formData.note}
                 overflow="hidden"
                 onChange={handleChange}
-                maxLength={140}
+                maxLength={160}
               />
             </div>
             <Button
