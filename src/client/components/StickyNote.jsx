@@ -14,6 +14,10 @@ const StickyNote = ({note, index}) => {
     const [title, setTitle] = useState(note.title);
     const [noteBox, setNoteBox] = useState(note.note);
     const [time, setTime] = useState('');
+    const [titleCount, setTitleCount] = useState('11');
+    const [noteCount, setNoteCount] = useState('30');
+
+
     const convertTime = () => {
 
         const date = new Date(note.updatedAt);
@@ -123,7 +127,6 @@ const StickyNote = ({note, index}) => {
     //  Check if title or note is changed
     const isChanged = (status, data, context) => {
         if (status === 'To Do') {
-            // console.log((notesContext.toDo.some(e => e[context] === data)), data, notesContext.toDo)
             return !(notesContext.toDo.some(e => e[context] === data));
         } else if (status === 'Completed') {
             return !(notesContext.completed.some(e => e[context] === data));
@@ -138,15 +141,16 @@ const StickyNote = ({note, index}) => {
             e.preventDefault();
             e.target.blur();
         } else if (e.keyCode === 27) {
-            e.target.blur();
+            e.target.value = note.title;
+            e.target.blur()
         };
     };
 
     // Update title when 'un-focus' the titlebox
     const onTitleBlur = (e) => { 
         e.preventDefault();
-        if (isChanged(note.status, title, 'title')) {
-            axiosConfig.put(`note/${note._id}`, {title})
+        if (isChanged(note.status, e.target.value, 'title')) {
+            axiosConfig.put(`note/${note._id}`, {title: e.target.value})
             .then((response) => {
                 updatedData(response.data.updatedNote.status, response.data.updatedNote);
                 console.log(response.data.message);
@@ -160,6 +164,7 @@ const StickyNote = ({note, index}) => {
             e.preventDefault();
             e.target.blur();
         } else if (e.keyCode === 27) {
+            e.target.value = note.note;
             e.target.blur();
         };
     };
@@ -167,8 +172,8 @@ const StickyNote = ({note, index}) => {
     // Update note when 'un-focus' the notebox
     const onNoteBlur = (e) => { 
         e.preventDefault();
-        if (isChanged(note.status, noteBox, 'note')) {
-            axiosConfig.put(`note/${note._id}`, {note: noteBox})
+        if (isChanged(note.status, e.target.value, 'note')) {
+            axiosConfig.put(`note/${note._id}`, {note: e.target.value})
             .then((response) => {
                 updatedData(response.data.updatedNote.status, response.data.updatedNote);
                 console.log(response.data.message);
@@ -181,9 +186,15 @@ const StickyNote = ({note, index}) => {
         return note.status === 'To Do'? 'stickynote toDoNote':
                 note.status === 'Completed'? 'stickynote completedNote':
                 'stickynote onHoldNote';
+    };
+
+    const titleWordCount = () => {
+        setTitleCount('11'); // out of 28
     }
 
-
+    const noteWordCount = () => {
+        setTitleCount('30'); // out of 160
+    }
 
     return (
         <div className={stickyNoteColor()}>
@@ -198,18 +209,25 @@ const StickyNote = ({note, index}) => {
                 {note.priority === 'High' && <p id='priorityMark-2' className='priorityMark'>.</p>}
                 {note.priority === 'High' && <p id='priorityMark-3' className='priorityMark'>.</p>}
             </div>
+            
+
             <div className='note-section'>
-                <div>
+                <div id='title-div'>
                     <form name='titleForm' method="POST">
-                        <textarea className='sticky-title' name="title" cols="16" rows="2" onChange={e => setTitle(e.target.value)} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title}></textarea>
+                        <textarea className='sticky-title' maxLength={28} name="title" cols="16" rows="2" onChange={e => setTitle(e.target.value)} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title}></textarea>
                         <input type="submit" hidden />
+                        <div className='hide-title-count'>
+                        <p id='title-count' className='count'>{titleCount} / 28</p>
+                        </div>
                     </form>
                 </div>
                 <div id='sticky-note'>
-                    {/* <p>{noteBox}</p> */}
                     <form name='noteForm' method="POST">
-                        <textarea className='customized-scrollbar' name="note" cols="18" rows="7" onChange={e => setNoteBox(e.target.value)} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox}></textarea>
+                        <textarea className='customized-scrollbar' maxLength={160} name="note" cols="18" rows="7" onChange={e => setNoteBox(e.target.value)} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox}></textarea>
                         <input type="submit" hidden />
+                        <div className='hide-note-count'>
+                        <p id='note-count' className='count'>{noteCount} / 160</p>
+                        </div>
                     </form>
                 </div>
                 <div id='bottom-note'>
