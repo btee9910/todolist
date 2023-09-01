@@ -24,7 +24,7 @@ export const listNote = async (req,res) => {
 export const createNote = async (req,res) => {
     try{
         const note = await Note.create(req.body);
-        res.status(200).json({note, message: `Task:${note.title} is created successfully`});
+        res.status(200).json({note, message: `Created: Task - ${note.title}`});
     }catch(e){
         console.log(e);
     }
@@ -50,7 +50,7 @@ export const editNote = async (req,res) => {
             return res.status(404).json({message: `connot find any note with ID ${id}`})
         }
         const updatedNote = await Note.findById(id);
-        res.status(200).json({updatedNote, message : `Task:${updatedNote.title} is edited sucessfully!`});
+        res.status(200).json({updatedNote, message : `Updated: Task- ${updatedNote.title}`});
     }catch(e){
         console.log(e);
     }
@@ -62,7 +62,7 @@ export const deleteNote = async (req,res) => {
         const id = req.params.id;
         const note = await Note.findByIdAndDelete(id)
 
-        res.status(200).json({message : `Task:${note.title} is deleted successfully!`});
+        res.status(200).json({message : `Deleted: Task- ${note.title}`});
     }catch(e){
         console.log(e);
     }

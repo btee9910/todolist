@@ -17,7 +17,18 @@ export default function NoteProvider(props) {
   const [completed, setCompleted] = useState([]);
   const [sort, setSort] = useState('Date, old to new');
   const [responseData, setResponseData] = useState(undefined)
-  const [confirmation, setConfirmation] = useState(false)
+  const [showForm, setShowForm] = useState(false);
+  const [tempTitle, setTempTitle] = useState('');
+  const [tempNote, setTempNote] = useState('');
+  const [notice, setNotice] = useState({message:'', type:''});
+  const [newNote, setNewNote] = useState({
+    title: '',
+    note: '',
+    priority: '',
+    status: 'To Do'
+   });
+
+
 
 
   //fetch main data from server
@@ -106,8 +117,17 @@ export default function NoteProvider(props) {
     setSort,
     responseData,
     setResponseData,
-    confirmation,
-    setConfirmation
+    sorting,
+    showForm,
+    setShowForm,
+    newNote,
+    setNewNote,
+    tempTitle,
+    setTempTitle,
+    tempNote,
+    setTempNote,
+    notice,
+    setNotice
   };
 
   return (
