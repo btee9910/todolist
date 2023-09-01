@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
-import axiosConfig from "../config/axios";
-import { useNote } from "./noteContext";
+import axiosConfig from "../../config/axios";
+import { useNote } from "../noteContext";
 
 
 const CkyComponent = () => {

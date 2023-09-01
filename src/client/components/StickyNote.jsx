@@ -136,7 +136,6 @@ const StickyNote = ({note, index, newNote}) => {
             .then((response) => {
                 if (response.status === 200) {
                     noteContext.setToDo(noteContext.sorting(noteContext.sort,[...noteContext.toDo, response.data.note]));
-                    // console.log(response.data.message);
                     showNotice(response.data.message);
                     resetNewNote();
                 };
@@ -198,7 +197,13 @@ const StickyNote = ({note, index, newNote}) => {
     // Update title when 'un-focus' the titlebox
     const onTitleBlur = (e) => { 
         e.preventDefault();
-        if (!newNote && isChanged(note.status, e.target.value, 'title')) {
+        if (e.target.value.length === 0 && !newNote) {
+            showNotice('Title cannot be empty.', 'warning');
+            document.getElementById('title-text' + note._id).focus();
+        } else if (noteBox.length === 0 && !newNote) {
+            showNotice('Note cannot be empty.', 'warning')
+            document.getElementById('note-text' + note._id).focus();
+        } else if (!newNote && isChanged(note.status, e.target.value, 'title')) {
             axiosConfig.put(`note/${note._id}`, {title: e.target.value})
             .then((response) => {
                 updatedData(response.data.updatedNote.status, response.data.updatedNote);
@@ -227,9 +232,13 @@ const StickyNote = ({note, index, newNote}) => {
     // Update note when 'un-focus' the notebox
     const onNoteBlur = (e) => { 
         e.preventDefault();
-        if (e.target.value.length === 0) showNotice('Note cannot be empty.', 'warning') && e.target.focus();
-        else if (title.length === 0) showNotice('Title cannot be empty.', 'warning') && e.target.focus()
-        else if (!newNote && isChanged(note.status, e.target.value, 'note')) {
+        if (e.target.value.length === 0 && !newNote) {
+            showNotice('Note cannot be empty.', 'warning');
+            document.getElementById('note-text' + note._id).focus();
+        } else if (title.length === 0 && !newNote) {
+            showNotice('Title cannot be empty.', 'warning')
+            document.getElementById('title-text' + note._id).focus();
+        } else if (!newNote && isChanged(note.status, e.target.value, 'note')) {
             axiosConfig.put(`note/${note._id}`, {note: e.target.value})
             .then((response) => {
                 updatedData(response.data.updatedNote.status, response.data.updatedNote);
@@ -279,7 +288,7 @@ const StickyNote = ({note, index, newNote}) => {
             {confirmPopUp && (
             <div onClick={handleCancel} className='pop-up-background'>
                 <div className="delete-pop-up">
-                    {newNote? <div>Removing new note?</div>: <div>Deleting {note.title}?</div>}
+                    {newNote? <div>Removing new To Do?</div>: <div>Deleting: Task- {note.title}?</div>}
                     <div>
                         <Button onClick={handleConfirm}>Confirm</Button>
                         <Button onClick={handleCancel} >Cancel</Button>
@@ -292,7 +301,7 @@ const StickyNote = ({note, index, newNote}) => {
                 {/* Title */}
                 <div id='title-div'>
                     <form name='titleForm'>
-                        <textarea required className='sticky-title' placeholder='Title' maxLength={28} name="title" cols="16" rows="2" onChange={e => {setTitle(e.target.value); (newNote && noteContext.setTempTitle(e.target.value))}} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title}/>
+                        <textarea required id={'title-text' + note._id} className='sticky-title' placeholder='Title' maxLength={28} name="title" cols="16" rows="2" onChange={e => {setTitle(e.target.value); (newNote && noteContext.setTempTitle(e.target.value))}} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title}/>
                         <input type="submit" hidden/>
                         <div className='hide-title-count'>
                         <p id='title-count' className='count'>{title.length} / 28</p>
@@ -302,7 +311,7 @@ const StickyNote = ({note, index, newNote}) => {
                 {/* Note detail */}
                 <div id='sticky-note'>
                     <form name='noteForm'>
-                        <textarea required className='customized-scrollbar' placeholder='note' maxLength={160} name="note" cols="18" rows="7" onChange={e => {setNoteBox(e.target.value); (newNote && noteContext.setTempNote(e.target.value))}} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox}/>
+                        <textarea required id={'note-text' + note._id} className='customized-scrollbar' placeholder='note' maxLength={160} name="note" cols="18" rows="7" onChange={e => {setNoteBox(e.target.value); (newNote && noteContext.setTempNote(e.target.value))}} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox}/>
                         <input type="submit" hidden />
                         <div className='hide-note-count'>
                         <p id='note-count' className='count'>{noteBox.length} / 160</p>
