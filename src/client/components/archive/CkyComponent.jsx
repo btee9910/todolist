@@ -1,75 +1,68 @@
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
-import axiosConfig from "../config/axios";
-import { useNote } from "./NoteContext";
+import axiosConfig from "../../config/axios";
+import { useNote } from "../noteContext";
 
 
 const CkyComponent = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [priority, setPriority] = useState();
   const [formData, setFormData] = useState({ title: "", note: "" });
   const [inputError, setInputError] = useState(undefined);
 
-  const noteContext = useNote();
-
-  const handleDelete = (e) => {
-    e.preventDefault()
-    noteContext.setConfirmation(true)
-  }
+  const notesContext = useNote();
 
   const handleClick = (e) => {
     e.preventDefault();
     setInputError(null);
-    if (priority == e.target.value) {
-      setShowForm(!showForm);
-      setPriority("");
+    if (notesContext.newNote.priority == e.target.value) {
+      notesContext.setShowForm(!(notesContext.showForm));
+      notesContext.setNewNote({...notesContext.newNote, priority: ''});
       setFormData({ title: "", note: "" });
     } else {
-      setShowForm(true);
-      setPriority(e.target.value);
+      notesContext.setShowForm(true);
+      notesContext.setNewNote({...notesContext.newNote, priority: e.target.value});
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (formData.title.length >= 5 && formData.note.length >= 5) {
-        const response = await axiosConfig.post("note", {
-          ...formData,
-          priority,
-        });
-        if (response.status == 200) {
-          setFormData({ title: "", note: "" });
-          noteContext.setResponseData(response.data.message)
-          setTimeout(()=>{
-          noteContext.setResponseData(undefined)
-          },5000)
-        }
-      } else {
-        alert("Input must be at least 5 characters!");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (formData.title.length >= 5 && formData.note.length >= 5) {
+  //       const response = await axiosConfig.post("note", {
+  //         ...formData,
+  //         priority,
+  //       });
+  //       if (response.status == 200) {
+  //         setFormData({ title: "", note: "" });
+  //         notesContext.setResponseData(response.data.message)
+  //         setTimeout(()=>{
+  //         notesContext.setResponseData(undefined)
+  //         },5000)
+  //       }
+  //     } else {
+  //       alert("Input must be at least 5 characters!");
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (value.length < 5) {
-      setInputError("Input must be at least 5 characters");
-      console.log(value, name);
-    } else {
-      setInputError(null);
-    }
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   if (value.length < 5) {
+  //     setInputError("Input must be at least 5 characters");
+  //     console.log(value, name);
+  //   } else {
+  //     setInputError(null);
+  //   }
+  //   setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  // };
 
   return (
     <>
       <div style={{ marginBottom: "15px" }}>
-        <Button variant="contained" color="error" onClick={handleDelete}>delete button</Button>
-        <div style={{ marginBottom: "5px" }}>Select your priority</div>
-        {priority === "High" ? (
+
+        <div style={{ marginBottom: "5px" }}>Create New To Do</div>
+        {notesContext.newNote.priority === "High" ? (
           <Button variant="contained" onClick={handleClick} value="High">
             High
           </Button>
@@ -78,7 +71,7 @@ const CkyComponent = () => {
             High
           </Button>
         )}
-        {priority === "Medium" ? (
+        {notesContext.newNote.priority === "Medium" ? (
           <Button variant="contained" onClick={handleClick} value="Medium">
             Medium
           </Button>
@@ -87,7 +80,7 @@ const CkyComponent = () => {
             Medium
           </Button>
         )}
-        {priority === "Low" ? (
+        {notesContext.newNote.priority === "Low" ? (
           <Button variant="contained" onClick={handleClick} value="Low">
             Low
           </Button>
@@ -98,7 +91,7 @@ const CkyComponent = () => {
         )}
       </div>
 
-      {showForm && (
+      {/* {showForm && (
         <div>
           <form onSubmit={handleSubmit}>
             <div>
@@ -145,7 +138,7 @@ const CkyComponent = () => {
             </Button>
           </form>
         </div>
-      )}
+      )} */}
     </>
   );
 };
