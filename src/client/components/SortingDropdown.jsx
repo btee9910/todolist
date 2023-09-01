@@ -16,12 +16,13 @@ const SortingDropdown = props => {
 
   return (
     <FormControl sx={{m: 1, minWidth: 135 }}  size="small">
-    <InputLabel id="demo-select-small-label">Sort</InputLabel>
+    {/* <InputLabel id="demo-select-small-label">Sort</InputLabel> */}
     <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
         value={notesContext.sort}
         label="Sort"
+        variant='standard'
         onChange={handleChange}>
 
         <MenuItem value={'Date, old to new'}>Date, old to new</MenuItem>

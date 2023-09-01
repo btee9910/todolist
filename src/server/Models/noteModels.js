@@ -1,8 +1,8 @@
 import mongoose, {Schema} from "mongoose";
 
 const noteSchema = new Schema({
-    title : { type: String, require: true},
-    note: { type: String, require: true},
+    title : { type: String, required: true},
+    note: { type: String, required: true},
     status : {
         type: String,
         enum: ['To Do', 'On Hold', 'Completed'],

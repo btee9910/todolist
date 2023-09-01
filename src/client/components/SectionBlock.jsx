@@ -3,13 +3,12 @@ import StickyNote from "./StickyNote";
 import { useNote } from "./NoteContext";
 
 const SectionBlock = ( {title, status} ) => {
-    const notesContext = useNote();
-    const [stickyNotes, setStickyNotes] = useState(notesContext[status])
-
+    const noteContext = useNote();
+    const [stickyNotes, setStickyNotes] = useState(noteContext[status])
 
     useEffect(() => {
-        setStickyNotes(notesContext[status]);
-    }, [notesContext[status]])
+        setStickyNotes(noteContext[status]);
+    }, [noteContext[status]])
     
     return (
         <div className="section-block">
@@ -19,6 +18,7 @@ const SectionBlock = ( {title, status} ) => {
             
             <div className="section-block-notes">
                 <div className="note-block">
+                {status === 'toDo' && noteContext.showForm && <StickyNote note={noteContext.newNote} index={999} newNote={noteContext.showForm} key={999}/>}
                     {stickyNotes.map((stickyNote, index) => {
                         return <StickyNote note={stickyNote} index={index} key={index}/>
                     })}
