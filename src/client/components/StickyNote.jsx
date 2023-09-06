@@ -188,8 +188,9 @@ const StickyNote = ({note, index, newNote}) => {
             :e.target.value.length === 0? showNotice('Title cannot be empty.', 'warning')
             :noteBox.length === 0? showNotice('Note cannot be empty.', 'warning')
             :e.target.blur();
-        } else if (e.keyCode === 27) {
+        } else if (e.keyCode === 27 && !newNote) {
             e.target.value = note.title;
+            setTitle(note.title);
             e.target.blur();
         };
     };
@@ -223,8 +224,9 @@ const StickyNote = ({note, index, newNote}) => {
             :e.target.value.length === 0? showNotice('Note cannot be empty.', 'warning')
             :title.length === 0? showNotice('Title cannot be empty.', 'warning')
             :e.target.blur();
-        } else if (e.keyCode === 27) {
+        } else if (e.keyCode === 27 && !newNote) {
             e.target.value = note.note;
+            setNoteBox(note.note);
             e.target.blur();
         };
     };
