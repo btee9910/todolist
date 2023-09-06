@@ -2,12 +2,15 @@ import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNote } from "./NoteContext";
 import SortingDropdown from "./SortingDropdown";
+import CurrentTime from "./CurrentTime";
 
 const HeaderBar = () => {
   const [inputError, setInputError] = useState(undefined);
 
   const noteContext = useNote();
   const priorityList = ['High', 'Medium', 'Low'];
+  const todayDate = new Date().toString();
+
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -26,7 +29,7 @@ const HeaderBar = () => {
   return (
     <header>
         <div className="header-div">
-          <h1>GET IT</h1>
+          <h1>GET MY</h1>
           <h1>WORK DONE</h1>
         </div>
         <div className="header-div">
@@ -43,7 +46,12 @@ const HeaderBar = () => {
 
         </div>
         <div className='dropdown header-div'>
+          <div>
+            <CurrentTime/>
+          </div>
+          <div>
             <SortingDropdown />
+          </div>
         </div>
     </header>
   );
