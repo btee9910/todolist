@@ -22,7 +22,7 @@ mongoose.connect(process.env.CONNECTION_URL)
 });
 
 app.use(cors());
-// app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
