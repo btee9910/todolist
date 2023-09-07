@@ -1,33 +1,33 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-// import routes from './routes/index.js';
-// import path from "path";
-// import { fileURLToPath } from 'url';
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = path.dirname(__filename);
+import routes from './routes/index.js';
+import path from "path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT;
 const app = express();
 
 mongoose.Promise = global.Promise;
-// mongoose.connect(process.env.CONNECTION_URL)
-// .then(()=> {
-//     console.log("MongoDB connected")
-//     app.listen(PORT, () => {
-//     console.log(`Server is running on http://localhost:${PORT}`);
-//     });
-// }).catch((error) => {
-//     console.log(error)
-// });
+mongoose.connect(process.env.CONNECTION_URL)
+.then(()=> {
+    console.log("MongoDB connected")
+    app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}).catch((error) => {
+    console.log(error)
+});
 
 app.use(cors());
-// app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
-// routes(app); // attach our routes to the servers 
-app.route('/').get(async (req, res) => {await res.send('Note World')});
+routes(app); // attach our routes to the servers 
+// app.route('/').get(async (req, res) => {await res.send('Note World')});
 
 // a 404 "page not found" 
 app.use((req, res) => {  // default function if not function work
@@ -48,10 +48,10 @@ app.use("*", (req, res) => {
     });
 });
 
-// app.get("/*", (req, res) => { 
-//     res.sendFile(path.join(__dirname, "dist", "index.html"))
-// });
-app.listen(PORT);
+app.get("/*", (req, res) => { 
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
+});
+
 export default app;
 
 
