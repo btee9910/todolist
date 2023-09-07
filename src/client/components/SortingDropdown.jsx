@@ -15,9 +15,9 @@ const SortingDropdown = props => {
   };
 
   return (
-    <FormControl sx={{m: 1, minWidth: 135 }}  size="small">
-    {/* <InputLabel id="demo-select-small-label">Sort</InputLabel> */}
-    <Select
+    <FormControl sx={{ m: 1, minWidth: 135 }} size="small">
+      {/* <InputLabel id="demo-select-small-label">Sort</InputLabel> */}
+      <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
         value={notesContext.sort}
@@ -30,7 +30,7 @@ const SortingDropdown = props => {
         <MenuItem value={'Priority, low to high'}>Priority, low to high</MenuItem>
         <MenuItem value={'Priority, high to low'}>Priority, high to low</MenuItem>
 
-    </Select>
+      </Select>
     </FormControl>
   )
 }

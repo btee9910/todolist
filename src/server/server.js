@@ -8,22 +8,18 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT;
-console.log(process.env);
-
-console.log(PORT);
-console.log(process.env.CONNECTION_URL);
 const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.CONNECTION_URL)
-.then(()=> {
-    console.log("MongoDB connected")
-    app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    .then(() => {
+        console.log("MongoDB connected")
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+        });
+    }).catch((error) => {
+        console.log(error)
     });
-}).catch((error) => {
-    console.log(error)
-});
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, "dist")));
@@ -36,7 +32,7 @@ routes(app); // attach our routes to the servers
 // a 404 "page not found" 
 app.use((req, res) => {  // default function if not function work
     res.status(404).send({ url: `${req.originalUrl} not found` });
-console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 
 });
 
@@ -52,10 +48,8 @@ app.use("*", (req, res) => {
     });
 });
 
-app.get("/*", (req, res) => { 
+app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"))
 });
 
 export default app;
-
-

@@ -58,9 +58,11 @@ body {
   .container {
     max-width: 320px;
   }
+
   .note-block {
     justify-content: center;
   }
+
   .section-block-notes {
     justify-content: center;
   }
@@ -82,7 +84,7 @@ header {
   margin: 20px 30px 10px 30px;
 }
 
-header > div:second-child {
+header>div:second-child {
   flex: 2;
 }
 
@@ -104,24 +106,26 @@ header > div:second-child {
     justify-content: center;
     align-items: center;
   }
+
   .header-div {
     margin-bottom: 3px;
   }
+
   .dropdown {
     text-align: center;
   }
 }
 
-.header-div > h1 {
+.header-div>h1 {
   text-align: left;
   font-weight: 900;
 }
 
-.header-div > p {
+.header-div>p {
   margin: 5px 0;
 }
 
-.header-div > Button {
+.header-div>Button {
   margin: 0 5px;
 }
 
@@ -136,7 +140,7 @@ header > div:second-child {
 
 
 
-.stickynote{
+.stickynote {
   display: inline-flex;
   position: relative;
   padding: 5px 5px 2px 5px;
@@ -196,14 +200,15 @@ header > div:second-child {
 .customized-scrollbar:hover::-webkit-scrollbar {
   width: 5px;
   height: 5px;
-  background-color: #aaa; /* or add it to the track */
+  background-color: #aaa;
+  /* or add it to the track */
 }
 
 .customized-scrollbar:hover::-webkit-scrollbar-thumb {
   background: #1E555C;
 }
 
-#sticky-note > form > textarea {
+#sticky-note>form>textarea {
   margin: 4px 0;
   width: 155px;
   border: 0;
@@ -217,7 +222,7 @@ header > div:second-child {
   border-left: 3px solid maroon;
 }
 
-#sticky-note > form > textarea:focus {
+#sticky-note>form>textarea:focus {
   outline: none;
   border-left: 3px solid maroon;
 }
@@ -229,7 +234,7 @@ header > div:second-child {
   height: 10px;
 }
 
-.date > p {
+.date>p {
   margin-block: 3px;
 }
 
@@ -238,7 +243,7 @@ header > div:second-child {
   height: 25px;
 }
 
-#sticky-button{
+#sticky-button {
   justify-content: center;
   width: 100%;
   margin-bottom: 5px;
@@ -254,9 +259,17 @@ header > div:second-child {
 }
 
 @keyframes fade {
-  0% {opacity: 0;}
-  70% {opacity: 0.5;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .button-style {
@@ -311,24 +324,28 @@ header > div:second-child {
 .newNote {
   /* background-color: rgb(202, 206, 243); */
   background-color: #f9d3b676;
-  animation:flash 2.5s linear infinite; 
+  animation: flash 2.5s linear infinite;
 }
 
 @keyframes flash {
   0% {
     border: 2px inset rgb(255, 255, 255);
   }
+
   25% {
     border: 2px solid red;
     outline: red double 2px;
   }
+
   50% {
     border: 2px inset rgb(255, 255, 255);
   }
+
   75% {
     border: 2px solid red;
     outline: red double 2px;
   }
+
   100% {
     border: 2px inset rgb(255, 255, 255);
   }
@@ -350,7 +367,7 @@ header > div:second-child {
   top: 163px;
 }
 
-.hide-title-count  {
+.hide-title-count {
   display: none;
 }
 
@@ -397,11 +414,11 @@ header > div:second-child {
   z-index: 100;
 }
 
-.delete-pop-up > div {
+.delete-pop-up>div {
   margin: 25px 0 10px 0;
 }
 
-.delete-pop-up > div > button {
+.delete-pop-up>div>button {
   margin: 10px 20px 0px 20px;
 }
 
@@ -413,28 +430,33 @@ header > div:second-child {
   top: 40%;
   left: 50%;
   transform: rotate(-20deg) translate(-50%, -50%);
-  animation:blink 2.5s linear; /* infinite alternate 2.5s; */
+  animation: blink 2.5s linear;
+  /* infinite alternate 2.5s; */
 }
 
 @keyframes blink {
   0% {
-    color:transparent;
+    color: transparent;
     opacity: 0;
   }
+
   70% {
-    color:red;
+    color: red;
     opacity: 1;
 
   }
+
   80% {
-    color:transparent;
+    color: transparent;
   }
+
   90% {
-    color:red;
+    color: red;
     opacity: 1;
   }
+
   100% {
-    color:transparent;
+    color: transparent;
     opacity: 0;
   }
 }
@@ -450,9 +472,9 @@ header > div:second-child {
   z-index: 60;
 }
 
-#notice > *{
+#notice>* {
   animation: notice-info 3s ease-in-out;
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   margin: 5px;
 }
 
@@ -460,23 +482,25 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
   0% {
     opacity: 0;
   }
+
   25% {
     opacity: 1;
 
   }
+
   75% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
 
 .notice {
-  background-image: linear-gradient(rgb(121, 197, 227),rgba(253, 253, 253, 0.483));
+  background-image: linear-gradient(rgb(121, 197, 227), rgba(253, 253, 253, 0.483));
 }
 
 .warning {
-  background-image: linear-gradient(rgb(255, 87, 87),rgba(253, 253, 253, 0.483));
+  background-image: linear-gradient(rgb(255, 87, 87), rgba(253, 253, 253, 0.483));
 }
-

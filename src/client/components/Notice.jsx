@@ -5,9 +5,9 @@ const Notice = () => {
 
   return (
     <>
-        {noteContext.notice && <div id="notice" className={noteContext.notice.type}>
-            <h4>{noteContext.notice.message}</h4>
-        </div>}
+      {noteContext.notice && <div id="notice" className={noteContext.notice.type}>
+        <h4>{noteContext.notice.message}</h4>
+      </div>}
     </>
   )
 }
