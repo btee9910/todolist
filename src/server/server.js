@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import routes from './routes/index.js';
+import path from "path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT;
 const app = express();
@@ -18,6 +22,7 @@ mongoose.connect(process.env.CONNECTION_URL)
 });
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
@@ -40,4 +45,8 @@ app.use("*", (req, res) => {
             message: "You reached a route that is not defined on this server",
         },
     });
+});
+
+app.get("/*", (req, res) => { 
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
 });
