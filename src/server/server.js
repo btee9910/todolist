@@ -52,6 +52,6 @@ app.use("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "dist", "index.html"))
 // });
 app.listen(PORT);
-module.exports = app
+export default app;
 
 
