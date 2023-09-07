@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import routes from './routes/index.js';
+// import routes from './routes/index.js';
 // import path from "path";
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url)
@@ -51,3 +51,5 @@ app.use("*", (req, res) => {
 // app.get("/*", (req, res) => { 
 //     res.sendFile(path.join(__dirname, "dist", "index.html"))
 // });
+
+module.exports = app
