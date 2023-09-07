@@ -11,15 +11,15 @@ const PORT = process.env.PORT;
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.CONNECTION_URL)
-.then(()=> {
-    console.log("MongoDB connected")
-    app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    });
-}).catch((error) => {
-    console.log(error)
-});
+// mongoose.connect(process.env.CONNECTION_URL)
+// .then(()=> {
+//     console.log("MongoDB connected")
+//     app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+//     });
+// }).catch((error) => {
+//     console.log(error)
+// });
 
 app.use(cors());
 // app.use(express.static(path.join(__dirname, "dist")));
@@ -51,5 +51,5 @@ app.use("*", (req, res) => {
 // app.get("/*", (req, res) => { 
 //     res.sendFile(path.join(__dirname, "dist", "index.html"))
 // });
-
+app.listen(PORT);
 module.exports = app
