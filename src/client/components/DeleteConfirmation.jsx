@@ -3,10 +3,10 @@ import { useNote } from './NoteContext'
 import { Translate } from "@mui/icons-material";
 
 const DeleteConfirmation = () => {
-    const noteContext = useNote();
+  const noteContext = useNote();
   return (
     <div>
-        {noteContext.responseData && (
+      {noteContext.responseData && (
         <div
           style={{
             borderColor: "black",
@@ -16,20 +16,20 @@ const DeleteConfirmation = () => {
             top: "50%",
             left: "50%",
             padding: "10px",
-            display:"flex"
+            display: "flex"
           }}
         >
           {noteContext.responseData}
         </div>
       )}
       {noteContext.confirmation && (
-      <div className="delete-pop-up">
-        <div>Confirm delete?</div>
-        <div>
+        <div className="delete-pop-up">
+          <div>Confirm delete?</div>
+          <div>
             <Button>Confirm</Button>
-            <Button onClick={()=> noteContext.setConfirmation(false) } >Cancel</Button>
+            <Button onClick={() => noteContext.setConfirmation(false)} >Cancel</Button>
+          </div>
         </div>
-      </div>
       )}
     </div>
   )

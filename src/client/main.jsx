@@ -7,7 +7,7 @@ import NoteProvider from './components/NoteContext.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <NoteProvider>
-    <App />
+      <App />
     </NoteProvider>
   </React.StrictMode>,
 )

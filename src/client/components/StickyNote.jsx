@@ -11,7 +11,7 @@ import axiosConfig from '../config/axios';
 import Notice from './Notice';
 
 
-const StickyNote = ({note, index, newNote}) => {
+const StickyNote = ({ note, index, newNote }) => {
     const noteContext = useNote();
     const [updated, setUpdated] = useState(false);
     const [title, setTitle] = useState(note.title);
@@ -23,7 +23,7 @@ const StickyNote = ({note, index, newNote}) => {
 
         const date = new Date(note.updatedAt);
         setTime(new Intl.DateTimeFormat('en-US', {
-            dateStyle: "short", 
+            dateStyle: "short",
             timeStyle: "short",
         }).format(date));
         if (note.updatedAt !== note.createdAt) setUpdated(true);
@@ -32,98 +32,99 @@ const StickyNote = ({note, index, newNote}) => {
     useEffect(() => {
         setTitle(note.title);
         setNoteBox(note.note);
-        newNote? setTime(''): convertTime();
-     }, [note]);
+        newNote ? setTime('') : convertTime();
+    }, [note]);
 
 
     const handlePause = (e) => {
         e.preventDefault();
-        axiosConfig.put(`note/${note._id}`, {status: 'On Hold'})
-        .then((response) => {
-            if (response.status === 200) {
-                showNotice(`Paused: Task- ${response.data.updatedNote.title}`);
-                let tempNote = [...noteContext.toDo];
-                tempNote.splice(index, 1);
-                noteContext.setToDo(tempNote);
-                noteContext.setOnHold(noteContext.sorting(noteContext.sort,[...noteContext.onHold, response.data.updatedNote]));
-            };
-        });
+        axiosConfig.put(`note/${note._id}`, { status: 'On Hold' })
+            .then((response) => {
+                if (response.status === 200) {
+                    showNotice(`Paused: Task- ${response.data.updatedNote.title}`);
+                    let tempNote = [...noteContext.toDo];
+                    tempNote.splice(index, 1);
+                    noteContext.setToDo(tempNote);
+                    noteContext.setOnHold(noteContext.sorting(noteContext.sort, [...noteContext.onHold, response.data.updatedNote]));
+                };
+            });
     };
 
     const handleComplete = (e) => {
         e.preventDefault();
-        axiosConfig.put(`note/${note._id}`, {status: 'Completed'})
-        .then((response) => {
-            if (response.status === 200) {
-                showNotice(`Completed: Task- ${response.data.updatedNote.title}`);
-                let tempNote = [...noteContext.toDo];
-                tempNote.splice(index, 1);
-                noteContext.setToDo(tempNote);
-                noteContext.setCompleted(noteContext.sorting(noteContext.sort,[...noteContext.completed, response.data.updatedNote]));
-            };
-        });
+        axiosConfig.put(`note/${note._id}`, { status: 'Completed' })
+            .then((response) => {
+                if (response.status === 200) {
+                    showNotice(`Completed: Task- ${response.data.updatedNote.title}`);
+                    let tempNote = [...noteContext.toDo];
+                    tempNote.splice(index, 1);
+                    noteContext.setToDo(tempNote);
+                    noteContext.setCompleted(noteContext.sorting(noteContext.sort, [...noteContext.completed, response.data.updatedNote]));
+                };
+            });
     };
 
     const handleRestore = (e) => {
         e.preventDefault();
         let currentStatus = note.status;
-        axiosConfig.put(`note/${note._id}`, {status: 'To Do'})
-        .then((response) => {
-            if (response.status === 200) {
-                showNotice(`Restored: Task- ${response.data.updatedNote.title}`);
-                let tempNote = [];
-                if (currentStatus === 'On Hold') {
-                    tempNote = [...noteContext.onHold];
-                    tempNote.splice(index, 1);
-                    noteContext.setOnHold([...tempNote]);
-                } else {
-                    tempNote = [...noteContext.completed];
-                    tempNote.splice(index, 1);
-                    noteContext.setCompleted([...tempNote]);
-                }
+        axiosConfig.put(`note/${note._id}`, { status: 'To Do' })
+            .then((response) => {
+                if (response.status === 200) {
+                    showNotice(`Restored: Task- ${response.data.updatedNote.title}`);
+                    let tempNote = [];
+                    if (currentStatus === 'On Hold') {
+                        tempNote = [...noteContext.onHold];
+                        tempNote.splice(index, 1);
+                        noteContext.setOnHold([...tempNote]);
+                    } else {
+                        tempNote = [...noteContext.completed];
+                        tempNote.splice(index, 1);
+                        noteContext.setCompleted([...tempNote]);
+                    }
 
-                noteContext.setToDo(noteContext.sorting(noteContext.sort,[...noteContext.toDo, response.data.updatedNote]));
-            };
-        });
+                    noteContext.setToDo(noteContext.sorting(noteContext.sort, [...noteContext.toDo, response.data.updatedNote]));
+                };
+            });
     };
 
-    const handleDelete = (e) => { 
+    const handleDelete = (e) => {
         setConfirmPopUp(true);
     };
 
-    const handleConfirm = (e) => { 
+    const handleConfirm = (e) => {
         if (newNote) {
             resetNewNote();
         } else {
-        let currentStatus = note.status;
-        axiosConfig.delete(`note/${note._id}`)
-        .then((response) => {
-            console.log(response.data.message);
-            showNotice(response.data.message);
-            let tempNote = [];
-            if (currentStatus === 'To Do') {
-                tempNote = noteContext.toDo;
-                tempNote.splice(index, 1);
-                noteContext.setToDo([...tempNote]);
-            } else if (currentStatus === 'On Hold') {
-                tempNote = noteContext.onHold;
-                tempNote.splice(index, 1);
-                noteContext.setOnHold([...tempNote]);
-            } else {
-                tempNote = noteContext.completed;
-                tempNote.splice(index, 1);
-                noteContext.setCompleted([...tempNote]);
-            };
-        })};
+            let currentStatus = note.status;
+            axiosConfig.delete(`note/${note._id}`)
+                .then((response) => {
+                    console.log(response.data.message);
+                    showNotice(response.data.message);
+                    let tempNote = [];
+                    if (currentStatus === 'To Do') {
+                        tempNote = noteContext.toDo;
+                        tempNote.splice(index, 1);
+                        noteContext.setToDo([...tempNote]);
+                    } else if (currentStatus === 'On Hold') {
+                        tempNote = noteContext.onHold;
+                        tempNote.splice(index, 1);
+                        noteContext.setOnHold([...tempNote]);
+                    } else {
+                        tempNote = noteContext.completed;
+                        tempNote.splice(index, 1);
+                        noteContext.setCompleted([...tempNote]);
+                    };
+                })
+        };
         setConfirmPopUp(false);
     };
 
-    const handleCancel = (e) => { 
+    const handleCancel = (e) => {
         setConfirmPopUp(false);
     };
 
     const resetNewNote = () => {
-        noteContext.setNewNote({...noteContext.newNote, priority: '', title: '', note: ''});
+        noteContext.setNewNote({ ...noteContext.newNote, priority: '', title: '', note: '' });
         noteContext.setShowForm(false);
         noteContext.setTempTitle('');
         noteContext.setTempNote('');
@@ -132,22 +133,22 @@ const StickyNote = ({note, index, newNote}) => {
 
     const postNewNote = () => {
         if (title.length >= 1 && noteBox.length >= 1) {
-            axiosConfig.post(`note`, {...note, title: title, note: noteBox})
-            .then((response) => {
-                if (response.status === 200) {
-                    noteContext.setToDo(noteContext.sorting(noteContext.sort,[...noteContext.toDo, response.data.note]));
-                    showNotice(response.data.message);
-                    resetNewNote();
-                };
-            }).catch((error) => {
-                console.log(error);
-            });
+            axiosConfig.post(`note`, { ...note, title: title, note: noteBox })
+                .then((response) => {
+                    if (response.status === 200) {
+                        noteContext.setToDo(noteContext.sorting(noteContext.sort, [...noteContext.toDo, response.data.note]));
+                        showNotice(response.data.message);
+                        resetNewNote();
+                    };
+                }).catch((error) => {
+                    console.log(error);
+                });
         } else {
             showNotice('Title and note cannot be empty.', 'warning');
         };
     };
 
-    const handleCreate = (e) => { 
+    const handleCreate = (e) => {
         postNewNote();
     };
 
@@ -157,15 +158,15 @@ const StickyNote = ({note, index, newNote}) => {
         if (status === 'To Do') {
             temp = [...noteContext.toDo];
             !newNote && temp.splice(index, 1)
-            noteContext.setToDo(noteContext.sorting(noteContext.sort,[...temp, note]))
+            noteContext.setToDo(noteContext.sorting(noteContext.sort, [...temp, note]))
         } else if (status === 'Completed') {
             temp = [...noteContext.completed];
             temp.splice(index, 1)
-            noteContext.setCompleted(noteContext.sorting(noteContext.sort,[...temp, note]))
+            noteContext.setCompleted(noteContext.sorting(noteContext.sort, [...temp, note]))
         } else if (status === 'On Hold') {
             temp = [...noteContext.onHold];
             temp.splice(index, 1)
-            noteContext.setOnHold(noteContext.sorting(noteContext.sort,[...temp, note]))
+            noteContext.setOnHold(noteContext.sorting(noteContext.sort, [...temp, note]))
         };
     };
 
@@ -181,13 +182,13 @@ const StickyNote = ({note, index, newNote}) => {
     };
 
     // Update title when pressing enter or reset when pressing esc (set to blur will active onBlur function)
-    const onTitleKeyPress = (e) => { 
-        if(e.keyCode === 13 && !e.shiftKey) {
+    const onTitleKeyPress = (e) => {
+        if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
-            newNote? postNewNote()
-            :e.target.value.length === 0? showNotice('Title cannot be empty.', 'warning')
-            :noteBox.length === 0? showNotice('Note cannot be empty.', 'warning')
-            :e.target.blur();
+            newNote ? postNewNote()
+                : e.target.value.length === 0 ? showNotice('Title cannot be empty.', 'warning')
+                    : noteBox.length === 0 ? showNotice('Note cannot be empty.', 'warning')
+                        : e.target.blur();
         } else if (e.keyCode === 27 && !newNote) {
             e.target.value = note.title;
             setTitle(note.title);
@@ -196,7 +197,7 @@ const StickyNote = ({note, index, newNote}) => {
     };
 
     // Update title when 'un-focus' the titlebox
-    const onTitleBlur = (e) => { 
+    const onTitleBlur = (e) => {
         e.preventDefault();
         if (e.target.value.length === 0 && !newNote) {
             showNotice('Title cannot be empty.', 'warning');
@@ -205,25 +206,25 @@ const StickyNote = ({note, index, newNote}) => {
             showNotice('Note cannot be empty.', 'warning')
             document.getElementById('note-text' + note._id).focus();
         } else if (!newNote && isChanged(note.status, e.target.value, 'title')) {
-            axiosConfig.put(`note/${note._id}`, {title: e.target.value})
-            .then((response) => {
-                updatedData(response.data.updatedNote.status, response.data.updatedNote);
-                // console.log(response.data.message);
-                showNotice(response.data.message);
-            }).catch((error) => {
-                console.log(error);
-            });
+            axiosConfig.put(`note/${note._id}`, { title: e.target.value })
+                .then((response) => {
+                    updatedData(response.data.updatedNote.status, response.data.updatedNote);
+                    // console.log(response.data.message);
+                    showNotice(response.data.message);
+                }).catch((error) => {
+                    console.log(error);
+                });
         } else console.log('No title update needed');
     };
 
     // Update note when pressing enter or reset when pressing esc (set to blur will active onBlur function)
-    const onNoteKeyPress = (e) => { 
-        if(e.keyCode === 13 && !e.shiftKey) {
+    const onNoteKeyPress = (e) => {
+        if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
-            newNote? postNewNote()
-            :e.target.value.length === 0? showNotice('Note cannot be empty.', 'warning')
-            :title.length === 0? showNotice('Title cannot be empty.', 'warning')
-            :e.target.blur();
+            newNote ? postNewNote()
+                : e.target.value.length === 0 ? showNotice('Note cannot be empty.', 'warning')
+                    : title.length === 0 ? showNotice('Title cannot be empty.', 'warning')
+                        : e.target.blur();
         } else if (e.keyCode === 27 && !newNote) {
             e.target.value = note.note;
             setNoteBox(note.note);
@@ -232,7 +233,7 @@ const StickyNote = ({note, index, newNote}) => {
     };
 
     // Update note when 'un-focus' the notebox
-    const onNoteBlur = (e) => { 
+    const onNoteBlur = (e) => {
         e.preventDefault();
         if (e.target.value.length === 0 && !newNote) {
             showNotice('Note cannot be empty.', 'warning');
@@ -241,29 +242,29 @@ const StickyNote = ({note, index, newNote}) => {
             showNotice('Title cannot be empty.', 'warning')
             document.getElementById('title-text' + note._id).focus();
         } else if (!newNote && isChanged(note.status, e.target.value, 'note')) {
-            axiosConfig.put(`note/${note._id}`, {note: e.target.value})
-            .then((response) => {
-                updatedData(response.data.updatedNote.status, response.data.updatedNote);
-                // console.log(response.data.message);
-                showNotice(response.data.message);
-            });
+            axiosConfig.put(`note/${note._id}`, { note: e.target.value })
+                .then((response) => {
+                    updatedData(response.data.updatedNote.status, response.data.updatedNote);
+                    // console.log(response.data.message);
+                    showNotice(response.data.message);
+                });
         } else console.log('No note update needed');
     };
 
     // Edit CCS for stickyNote based on its status
     const stickyNoteColor = () => {
-        return newNote? 'stickynote newNote':
-                note.status === 'To Do'? 'stickynote toDoNote':
-                note.status === 'Completed'? 'stickynote completedNote':
-                'stickynote onHoldNote';
+        return newNote ? 'stickynote newNote' :
+            note.status === 'To Do' ? 'stickynote toDoNote' :
+                note.status === 'Completed' ? 'stickynote completedNote' :
+                    'stickynote onHoldNote';
     };
 
-    const showNotice = (message, type='notice') => {
+    const showNotice = (message, type = 'notice') => {
         setTimeout(0)
-        noteContext.setNotice({message, type});
+        noteContext.setNotice({ message, type });
         setTimeout((t) => {
-            noteContext.setNotice({message:'', type:''});
-          }, 3000);
+            noteContext.setNotice({ message: '', type: '' });
+        }, 3000);
     }
 
     return (
@@ -288,66 +289,66 @@ const StickyNote = ({note, index, newNote}) => {
             </div>
             {/* Delete confirmation */}
             {confirmPopUp && (
-            <div onClick={handleCancel} className='pop-up-background'>
-                <div className="delete-pop-up">
-                    {newNote? <div>Removing new To Do?</div>: <div>Deleting: Task- {note.title}?</div>}
-                    <div>
-                        <Button onClick={handleConfirm}>Confirm</Button>
-                        <Button onClick={handleCancel} >Cancel</Button>
+                <div onClick={handleCancel} className='pop-up-background'>
+                    <div className="delete-pop-up">
+                        {newNote ? <div>Removing new To Do?</div> : <div>Deleting: Task- {note.title}?</div>}
+                        <div>
+                            <Button onClick={handleConfirm}>Confirm</Button>
+                            <Button onClick={handleCancel} >Cancel</Button>
+                        </div>
                     </div>
                 </div>
-            </div>
             )}
 
             <div className='note-section'>
                 {/* Title */}
                 <div id='title-div'>
                     <form name='titleForm'>
-                        <textarea required id={'title-text' + note._id} className='sticky-title' placeholder='Title' maxLength={28} name="title" cols="16" rows="2" onChange={e => {setTitle(e.target.value); (newNote && noteContext.setTempTitle(e.target.value))}} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title}/>
-                        <input type="submit" hidden/>
+                        <textarea required id={'title-text' + note._id} className='sticky-title' placeholder='Title' maxLength={28} name="title" cols="16" rows="2" onChange={e => { setTitle(e.target.value); (newNote && noteContext.setTempTitle(e.target.value)) }} onBlur={onTitleBlur} onKeyDown={onTitleKeyPress} value={title} />
+                        <input type="submit" hidden />
                         <div className='hide-title-count'>
-                        <p id='title-count' className='count'>{title.length} / 28</p>
+                            <p id='title-count' className='count'>{title.length} / 28</p>
                         </div>
                     </form>
                 </div>
                 {/* Note detail */}
                 <div id='sticky-note'>
                     <form name='noteForm'>
-                        <textarea required id={'note-text' + note._id} className='customized-scrollbar' placeholder='note' maxLength={160} name="note" cols="18" rows="7" onChange={e => {setNoteBox(e.target.value); (newNote && noteContext.setTempNote(e.target.value))}} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox}/>
+                        <textarea required id={'note-text' + note._id} className='customized-scrollbar' placeholder='note' maxLength={160} name="note" cols="18" rows="7" onChange={e => { setNoteBox(e.target.value); (newNote && noteContext.setTempNote(e.target.value)) }} onBlur={onNoteBlur} onKeyDown={onNoteKeyPress} value={noteBox} />
                         <input type="submit" hidden />
                         <div className='hide-note-count'>
-                        <p id='note-count' className='count'>{noteBox.length} / 160</p>
+                            <p id='note-count' className='count'>{noteBox.length} / 160</p>
                         </div>
                     </form>
                 </div>
 
                 {/* Bottom Buttom */}
-                <div id='bottom-note'>             
+                <div id='bottom-note'>
                     <div id='sticky-button' className='hide'>
-                        {newNote? <Button onClick={handleCreate} className='button-style' size='small' variant="outlined" startIcon={<AddIcon/>}>Create</Button>
-                        : note.status === 'To Do'? 
-                        <div>
-                        <Button onClick={handlePause} className='button-style' size='small' variant="outlined" startIcon={<PauseIcon/>}>Pause</Button>
-                        <Button onClick={handleComplete} className='button-style' size='small' variant="outlined" startIcon={<DoneIcon/>}>Complete</Button>
-                        </div>
-                        : note.status === 'Completed'? 
-                        <Button onClick={handleRestore} className='button-style' size='small' variant="outlined" startIcon={<RestoreIcon/>}>Restore</Button>
-                        : note.status === 'On Hold'? 
-                        <Button onClick={handleRestore} className='button-style' size='small' variant="outlined" startIcon={<RestoreIcon/>}>Restore</Button>
-                        : <Button className='button-style' size='small' variant="outlined" startIcon={<EditNoteIcon/>}>Update</Button>}
+                        {newNote ? <Button onClick={handleCreate} className='button-style' size='small' variant="outlined" startIcon={<AddIcon />}>Create</Button>
+                            : note.status === 'To Do' ?
+                                <div>
+                                    <Button onClick={handlePause} className='button-style' size='small' variant="outlined" startIcon={<PauseIcon />}>Pause</Button>
+                                    <Button onClick={handleComplete} className='button-style' size='small' variant="outlined" startIcon={<DoneIcon />}>Complete</Button>
+                                </div>
+                                : note.status === 'Completed' ?
+                                    <Button onClick={handleRestore} className='button-style' size='small' variant="outlined" startIcon={<RestoreIcon />}>Restore</Button>
+                                    : note.status === 'On Hold' ?
+                                        <Button onClick={handleRestore} className='button-style' size='small' variant="outlined" startIcon={<RestoreIcon />}>Restore</Button>
+                                        : <Button className='button-style' size='small' variant="outlined" startIcon={<EditNoteIcon />}>Update</Button>}
                     </div>
                 </div>
 
                 {/* Date */}
                 <div className='date'>
-                        <p>
-                        {newNote? 'Creating new note. . .':
-                        note.status === 'Completed'? 'Completed on':
-                        note.status === 'On Hold'? 'Paused on':
-                        note.status === 'To Do' && !updated ? 'Created on':
-                        'Updated on' } {time}</p>
-                    </div>
-                
+                    <p>
+                        {newNote ? 'Creating new note. . .' :
+                            note.status === 'Completed' ? 'Completed on' :
+                                note.status === 'On Hold' ? 'Paused on' :
+                                    note.status === 'To Do' && !updated ? 'Created on' :
+                                        'Updated on'} {time}</p>
+                </div>
+
             </div>
         </div>
     )

@@ -20,47 +20,44 @@ export default function NoteProvider(props) {
   const [showForm, setShowForm] = useState(false);
   const [tempTitle, setTempTitle] = useState('');
   const [tempNote, setTempNote] = useState('');
-  const [notice, setNotice] = useState({message:'', type:''});
+  const [notice, setNotice] = useState({ message: '', type: '' });
   const [newNote, setNewNote] = useState({
     title: '',
     note: '',
     priority: '',
     status: 'To Do'
-   });
-
-
-
+  });
 
   //fetch main data from server
   const fetchData = () => {
     try {
       axiosConfig.get("note")
-      .then((response) => {
-        if (response.status === 200) {
-          let todo = [];
-          let onHold = [];
-          let completed = [];
+        .then((response) => {
+          if (response.status === 200) {
+            let todo = [];
+            let onHold = [];
+            let completed = [];
 
-          response.data.forEach((data) => {
-            if (data.status === "To Do") {
-              todo.push(data);
-            } else if (data.status === "On Hold") {
-              onHold.push(data);
-            } else {
-              completed.push(data);
-            }
-          });
-          setToDo(todo);
-          setOnHold(onHold);
-          setCompleted(completed);
-        };
-      });
+            response.data.forEach((data) => {
+              if (data.status === "To Do") {
+                todo.push(data);
+              } else if (data.status === "On Hold") {
+                onHold.push(data);
+              } else {
+                completed.push(data);
+              }
+            });
+            setToDo(todo);
+            setOnHold(onHold);
+            setCompleted(completed);
+          };
+        });
     } catch (e) {
       console.log(e);
     }
-  };  
+  };
 
-  useEffect( fetchData, []);
+  useEffect(fetchData, []);
 
   // Sort data by latest date from old to new
   const compareDate = (a, b) => {
@@ -68,7 +65,7 @@ export default function NoteProvider(props) {
     const date2 = b.updatedAt;
 
     let comparison = 0;
-    date1 > date2? comparison = 1: comparison = -1;
+    date1 > date2 ? comparison = 1 : comparison = -1;
     return comparison;
   };
 
@@ -78,12 +75,12 @@ export default function NoteProvider(props) {
     let medium = [];
     let high = [];
     notes.forEach((note) => {
-      note.priority === 'Low'? low.push(note):
-      note.priority === 'Medium'? medium.push(note):
-      high.push(note);
+      note.priority === 'Low' ? low.push(note) :
+        note.priority === 'Medium' ? medium.push(note) :
+          high.push(note);
     });
-    return order === 'incline'? [...low, ...medium, ...high]:
-     [...high, ...medium, ...low];
+    return order === 'incline' ? [...low, ...medium, ...high] :
+      [...high, ...medium, ...low];
   };
 
   // Sorting function
