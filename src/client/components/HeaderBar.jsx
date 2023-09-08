@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNote } from "./NoteContext";
 import SortingDropdown from "./SortingDropdown";
 import CurrentTime from "./CurrentTime";
