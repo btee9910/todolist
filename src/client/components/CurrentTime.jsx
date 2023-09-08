@@ -1,4 +1,3 @@
-import { Margin } from "@mui/icons-material";
 import { useEffect, useState } from "react"
 
 const CurrentTime = () => {
@@ -16,7 +15,6 @@ const CurrentTime = () => {
     }), 1000)
 
   }, [])
-
 
   return (
     <>

@@ -8,8 +8,6 @@ import { Button, IconButton } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useNote } from './NoteContext';
 import axiosConfig from '../config/axios';
-import Notice from './Notice';
-
 
 const StickyNote = ({ note, index, newNote }) => {
     const noteContext = useNote();
@@ -19,8 +17,8 @@ const StickyNote = ({ note, index, newNote }) => {
     const [time, setTime] = useState('');
     const [confirmPopUp, setConfirmPopUp] = useState(false)
 
+    // Converting MongoDB time format
     const convertTime = () => {
-
         const date = new Date(note.updatedAt);
         setTime(new Intl.DateTimeFormat('en-US', {
             dateStyle: "short",
@@ -29,13 +27,14 @@ const StickyNote = ({ note, index, newNote }) => {
         if (note.updatedAt !== note.createdAt) setUpdated(true);
     };
 
+    // Initial Data Rendering
     useEffect(() => {
         setTitle(note.title);
         setNoteBox(note.note);
         newNote ? setTime('') : convertTime();
     }, [note]);
 
-
+    // handle pause button
     const handlePause = (e) => {
         e.preventDefault();
         axiosConfig.put(`note/${note._id}`, { status: 'On Hold' })
@@ -50,6 +49,7 @@ const StickyNote = ({ note, index, newNote }) => {
             });
     };
 
+    // handle complete button
     const handleComplete = (e) => {
         e.preventDefault();
         axiosConfig.put(`note/${note._id}`, { status: 'Completed' })
@@ -64,6 +64,7 @@ const StickyNote = ({ note, index, newNote }) => {
             });
     };
 
+    // handle restore button
     const handleRestore = (e) => {
         e.preventDefault();
         let currentStatus = note.status;
@@ -87,13 +88,16 @@ const StickyNote = ({ note, index, newNote }) => {
             });
     };
 
+    // handle delete button by showing confirmation popup
     const handleDelete = (e) => {
         setConfirmPopUp(true);
     };
 
+    // handle delete confirmation button
     const handleConfirm = (e) => {
         if (newNote) {
             resetNewNote();
+            showNotice('Cancelled: New To Do');
         } else {
             let currentStatus = note.status;
             axiosConfig.delete(`note/${note._id}`)
@@ -119,18 +123,25 @@ const StickyNote = ({ note, index, newNote }) => {
         setConfirmPopUp(false);
     };
 
+    // handle popup cencel button
     const handleCancel = (e) => {
         setConfirmPopUp(false);
     };
 
+    // handle newNote create button
+    const handleCreate = (e) => {
+        postNewNote();
+    };
+
+    // clear data on newNote
     const resetNewNote = () => {
         noteContext.setNewNote({ ...noteContext.newNote, priority: '', title: '', note: '' });
         noteContext.setShowForm(false);
         noteContext.setTempTitle('');
         noteContext.setTempNote('');
-        showNotice('Cancelled: New To Do');
     };
 
+    // posting newNote data to backend
     const postNewNote = () => {
         if (title.length >= 1 && noteBox.length >= 1) {
             axiosConfig.post(`note`, { ...note, title: title, note: noteBox })
@@ -148,11 +159,7 @@ const StickyNote = ({ note, index, newNote }) => {
         };
     };
 
-    const handleCreate = (e) => {
-        postNewNote();
-    };
-
-
+    // updating data for rendering
     const updatedData = (status, note) => {
         let temp = [];
         if (status === 'To Do') {
@@ -259,6 +266,7 @@ const StickyNote = ({ note, index, newNote }) => {
                     'stickynote onHoldNote';
     };
 
+    // showing notification
     const showNotice = (message, type = 'notice') => {
         setTimeout(0)
         noteContext.setNotice({ message, type });

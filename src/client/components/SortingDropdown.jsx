@@ -5,8 +5,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useNote } from './NoteContext';
 
-
-
 const SortingDropdown = props => {
   const notesContext = useNote();
 
