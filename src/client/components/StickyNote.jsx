@@ -20,7 +20,7 @@ const StickyNote = ({ note, index, newNote }) => {
     // Converting MongoDB time format
     const convertTime = () => {
         const date = new Date(note.updatedAt);
-        setTime(new Intl.DateTimeFormat('en-US', {
+        setTime(new Intl.DateTimeFormat('en-AU', {
             dateStyle: "short",
             timeStyle: "short",
         }).format(date));

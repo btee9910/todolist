@@ -23,7 +23,7 @@ mongoose.connect(process.env.CONNECTION_URL)
     });
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, "dist")));
+// app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
@@ -49,8 +49,8 @@ app.use("*", (req, res) => {
     });
 });
 
-app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"))
-});
+// app.get("/*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "dist", "index.html"))
+// });
 
 export default app;
