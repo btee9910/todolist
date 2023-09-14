@@ -15,7 +15,6 @@ const SectionBlock = ({ title, status }) => {
             <div>
                 <h2 className="section-block-title">{title}</h2>
             </div>
-
             <div className="section-block-notes">
                 <div className="note-block">
                     {status === 'toDo' && noteContext.showForm && <StickyNote note={noteContext.newNote} index={999} newNote={noteContext.showForm} key={999} />}
@@ -25,9 +24,7 @@ const SectionBlock = ({ title, status }) => {
 
                 </div>
             </div>
-
         </div>
-
     );
 }
 

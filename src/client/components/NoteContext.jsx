@@ -31,7 +31,7 @@ export default function NoteProvider(props) {
   //fetch main data from server
   const fetchData = () => {
     try {
-      axiosConfig.get("note")
+      axiosConfig.get("/note")
         .then((response) => {
           if (response.status === 200) {
             let todo = [];
