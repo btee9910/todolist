@@ -23,12 +23,11 @@ mongoose.connect(process.env.CONNECTION_URL)
     });
 
 app.use(cors());
-// app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // express to support json
 
 routes(app); // attach our routes to the servers 
-// app.route('/').get(async (req, res) => {await res.send('Note World')});
 
 // a 404 "page not found" 
 app.use((req, res) => {  // default function if not function work
@@ -49,8 +48,8 @@ app.use("*", (req, res) => {
     });
 });
 
-// app.get("/*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "dist", "index.html"))
-// });
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
+});
 
 export default app;
