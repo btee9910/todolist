@@ -12,6 +12,7 @@ const SectionBlock = ({ title, status }) => {
 
     return (
         <div className="section-block">
+            <div className="hover-effect"></div>
             <div>
                 <h2 className="section-block-title">{title}</h2>
             </div>
