@@ -5,20 +5,32 @@ body {
   line-height: 16px;
   text-align: center;
   color: #3A2E39;
-  min-height: 100%;
-  background: linear-gradient(0deg, rgb(106, 108, 130) 0%, rgb(171, 181, 171) 15%, rgb(255, 255, 241) 80%);
+  height: 100%;
+  /* background:  rgba(154, 171, 154, 0.254) ; */
+  background-color: #f9f5ecd3;
 }
 
 .container {
   margin: 0 auto;
   max-width: 1010px;
   min-width: 320px;
+  /* border: 1px solid grey; */
+
 }
 
 .section-block {
+  position: relative;
+  overflow: hidden;
   max-width: 1050px;
-  padding: 0px 10px 10px 10px;
+  padding: 5px 10px 30px 10px;
   margin: 0 auto 30px auto;
+  border-radius: 5px;
+  border: 1px dashed rgba(48, 48, 48, 0.632);
+  box-shadow: 1px 2px 3px grey;
+  /* background-color: #fff8f881; */
+  background-color: rgba(140, 86, 14, 0.281);
+  outline: 2px dashed rgba(110, 110, 110, 0.642);
+  outline-offset: -10px;
 }
 
 .section-block-notes {
@@ -71,7 +83,7 @@ body {
 }
 
 .section-block-title {
-  border-top: 2px solid rgb(145, 145, 145);
+  /* border-top: 2px solid rgb(145, 145, 145); */
   text-align: left;
   margin: 0;
   padding: 15px 0 20px 20px;
@@ -149,6 +161,7 @@ header>div:second-child {
   box-shadow: 2px 5px 1px rgb(90, 90, 90);
   color: #1E555C;
   font-size: 13px;
+  animation: appear 0.2s ease-in-out;
 }
 
 #cross-icon {
@@ -397,6 +410,7 @@ header>div:second-child {
   height: 100vh;
   z-index: 50;
   background-color: rgba(0, 0, 0, 0.5);
+  animation: appear 0.4s ease-in-out;
 }
 
 .delete-pop-up {
@@ -412,6 +426,16 @@ header>div:second-child {
   transform: translate(-50%, -50%);
   padding: 30px 100px;
   z-index: 100;
+  animation: appear 0.4s ease-in-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .delete-pop-up>div {
@@ -503,4 +527,31 @@ header>div:second-child {
 
 .warning {
   background-image: linear-gradient(rgb(255, 87, 87), rgba(253, 253, 253, 0.483));
+}
+
+.hover-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform-origin: center;
+  transform: rotate(90deg);
+  transform: translate3d( -200%, 0%, 0px) ;
+  background-color: rgba(255, 255, 255, 0.077);
+  transition: transform 500ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.section-block:hover .hover-effect {
+  transform: translate3d(200%, 0%, 0px) ;
+  opacity: 1;
+}
+
+.footer {
+  font-size: 14px;
+  margin-top: 30px;
+  padding-block: 20px;
+  border-top: 1px solid rgba(121, 121, 121, 0.426);
+
 }

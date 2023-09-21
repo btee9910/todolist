@@ -1,6 +1,7 @@
 import SectionBlock from "./components/SectionBlock";
 import HeaderBar from "./components/HeaderBar";
 import Notice from "./components/Notice";
+import Footer from "./components/Footer";
 const App = () => {
 
 
@@ -11,6 +12,7 @@ const App = () => {
       <SectionBlock title='To Do' status='toDo' />
       <SectionBlock title='Completed' status='completed' />
       <SectionBlock title='On Hold' status='onHold' />
+      <Footer />
     </div>
   );
 };
