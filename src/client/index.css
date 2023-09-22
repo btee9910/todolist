@@ -25,7 +25,7 @@ body {
   padding: 5px 10px 30px 10px;
   margin: 0 auto 30px auto;
   border-radius: 5px;
-  border: 1px dashed rgba(48, 48, 48, 0.632);
+  border: 1px solid rgba(66, 66, 66, 0.632);
   box-shadow: 1px 2px 3px grey;
   /* background-color: #fff8f881; */
   background-color: rgba(140, 86, 14, 0.281);
@@ -553,5 +553,8 @@ header>div:second-child {
   margin-top: 30px;
   padding-block: 20px;
   border-top: 1px solid rgba(121, 121, 121, 0.426);
+}
 
+.footer > a {
+  color: black;
 }
