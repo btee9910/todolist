@@ -11,5 +11,7 @@
       "src": "/(.*)",
       "dest": "src/server/server.js"
     }
-  ]
+  ],
+    "buildCommand": "cd src/client && npm install && npm run build"
+
 }
