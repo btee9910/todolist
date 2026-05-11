@@ -4,7 +4,7 @@ const compareDate = (a, b) => (a.updatedAt > b.updatedAt ? 1 : -1);
 
 export const listNote = async (req, res) => {
     try {
-        const notes = (await Note.find()).sort(compareDate);
+        const notes = (await Note.find({ sessionId: req.sessionId })).sort(compareDate);
         res.status(200).json(notes);
     } catch (e) {
         console.log(e);
@@ -14,7 +14,7 @@ export const listNote = async (req, res) => {
 
 export const createNote = async (req, res) => {
     try {
-        const note = await Note.create(req.body);
+        const note = await Note.create({ ...req.body, sessionId: req.sessionId });
         res.status(200).json({ note, message: `Created: Task - ${note.title}` });
     } catch (e) {
         console.log(e);
@@ -25,7 +25,10 @@ export const createNote = async (req, res) => {
 export const findNote = async (req, res) => {
     const { id } = req.params;
     try {
-        const note = await Note.findById(id);
+        const note = await Note.findOne({ _id: id, sessionId: req.sessionId });
+        if (!note) {
+            return res.status(404).json({ message: `cannot find any note with ID ${id}` });
+        }
         res.status(200).json(note);
     } catch (e) {
         console.log(e);
@@ -36,7 +39,10 @@ export const findNote = async (req, res) => {
 export const editNote = async (req, res) => {
     const { id } = req.params;
     try {
-        const note = await Note.findByIdAndUpdate(id, req.body);
+        const note = await Note.findOneAndUpdate(
+            { _id: id, sessionId: req.sessionId },
+            req.body
+        );
         if (!note) {
             return res.status(404).json({ message: `cannot find any note with ID ${id}` });
         }
@@ -51,7 +57,7 @@ export const editNote = async (req, res) => {
 export const deleteNote = async (req, res) => {
     const { id } = req.params;
     try {
-        const note = await Note.findByIdAndDelete(id);
+        const note = await Note.findOneAndDelete({ _id: id, sessionId: req.sessionId });
         if (!note) {
             return res.status(404).json({ message: `cannot find any note with ID ${id}` });
         }

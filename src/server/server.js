@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import routes from "./routes/index.js";
+import { ensureSession } from "./lib/session.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use("/api", ensureSession);
 routes(app);
 
 app.use(express.static(clientDist));

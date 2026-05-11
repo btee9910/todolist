@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Welcome!",
+    "note": "This is a personal demo. Your edits are private to you and clear after 24h of inactivity.",
+    "status": "To Do",
+    "priority": "High"
+  },
+  {
+    "title": "Try the basics",
+    "note": "Add, edit, change status, delete. Break things freely — your session is sandboxed.",
+    "status": "To Do",
+    "priority": "Medium"
+  },
+  {
+    "title": "Grocery run",
+    "note": "Milk, eggs, bread, coffee, blueberries",
+    "status": "To Do",
+    "priority": "Low"
+  },
+  {
+    "title": "Pay rent",
+    "note": "Due on the 5th. Set up auto-pay if possible.",
+    "status": "To Do",
+    "priority": "High"
+  },
+  {
+    "title": "Plan trip to Kyoto",
+    "note": "Check JR pass prices, book ryokan for late October.",
+    "status": "On Hold",
+    "priority": "Medium"
+  },
+  {
+    "title": "Renew gym membership",
+    "note": "Compare annual vs monthly. Check corporate discount.",
+    "status": "On Hold",
+    "priority": "Low"
+  },
+  {
+    "title": "Read DDIA",
+    "note": "Currently on chapter 5 — replication.",
+    "status": "On Hold",
+    "priority": "Low"
+  },
+  {
+    "title": "Submit Q1 expense report",
+    "note": "All receipts uploaded to Drive.",
+    "status": "Completed",
+    "priority": "Medium"
+  },
+  {
+    "title": "Buy birthday gift",
+    "note": "Got the watch from the wishlist.",
+    "status": "Completed",
+    "priority": "High"
+  },
+  {
+    "title": "Set up new laptop",
+    "note": "Migration finished, dotfiles synced.",
+    "status": "Completed",
+    "priority": "Low"
+  }
+]
