@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const clientDist = path.join(__dirname, "..", "client", "dist");
 
 const PORT = process.env.PORT;
 const app = express();
@@ -25,33 +26,19 @@ mongoose
   });
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); // express to support json
+app.use(express.json());
 
-routes(app); // attach our routes to the servers
+routes(app);
 
-// a 404 "page not found"
-app.use((req, res) => {
-  // default function if not function work
-  res.status(404).send({ url: `${req.originalUrl} not found` });
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.use(express.static(clientDist));
 
-// avoid access to any other route
-app.use("*", (req, res) => {
-  res.status(404).json({
-    success: "false",
-    message: "Page not found",
-    error: {
-      statusCode: 404,
-      message: "You reached a route that is not defined on this server",
-    },
-  });
+app.use("/api/*", (req, res) => {
+  res.status(404).json({ message: `${req.originalUrl} not found` });
 });
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(clientDist, "index.html"));
 });
 
 export default app;

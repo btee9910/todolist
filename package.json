@@ -7,6 +7,7 @@
     "start": "nodemon -r dotenv/config src/server/server.js",
     "dev": "vite src/client/ ",
     "build": "vite build src/client/",
+    "vercel-build": "vite build src/client/",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

@@ -15,9 +15,7 @@ const noteSchema = new Schema({
     },
 },
     {
-        timestamps: true
-    },
-    {
+        timestamps: true,
         collection: 'note'
     });
 
