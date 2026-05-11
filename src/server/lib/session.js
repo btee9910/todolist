@@ -21,18 +21,23 @@ const readCookie = (header, name) => {
     return null;
 };
 
+const seedFor = (sessionId) =>
+    Note.insertMany(SEED_NOTES.map(n => ({ ...n, sessionId })));
+
 export const ensureSession = async (req, res, next) => {
     try {
         let sessionId = readCookie(req.headers.cookie, COOKIE_NAME);
 
         if (!sessionId) {
             sessionId = crypto.randomUUID();
-            await Note.insertMany(SEED_NOTES.map(n => ({ ...n, sessionId })));
+            await seedFor(sessionId);
             const secureFlag = process.env.NODE_ENV === "production" ? "; Secure" : "";
             res.setHeader(
                 "Set-Cookie",
                 `${COOKIE_NAME}=${sessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${MAX_AGE_SECONDS}${secureFlag}`
             );
+        } else if (req.method === "GET" && (await Note.countDocuments({ sessionId })) === 0) {
+            await seedFor(sessionId);
         }
 
         req.sessionId = sessionId;
